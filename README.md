@@ -19,7 +19,9 @@ jacoco {
 
 * Now for the real gradle work!
 * We want the `jacoco` tasks to run after after the project is `evaluated`.
+
 >  Such a listener gets notified when the build file belonging to this project has been executed.
+
 ```
 project.afterEvaluate {
 	// Where we'll do all our work!
@@ -133,3 +135,5 @@ app:testFullReleaseUnitTestCoverage - Generate Jacoco coverage reports on the Fu
 4. The report can now be found in `/app/build/reports/jacoco/testDemoDebugUnitTestCoverage/` and the html version should looks something like this.
 
 <img src="report.png" />
+
+
