@@ -14,7 +14,23 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            testCoverageEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
+            testCoverageEnabled true
+        }
+    }
+    productFlavors{
+        free{
+            applicationIdSuffix ".free"
+            versionName "1.0-free"
+
+        }
+        paid{
+            applicationIdSuffix ".paid"
+            versionName "1.0-paid"
         }
     }
 }
