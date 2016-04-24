@@ -166,6 +166,22 @@ android {
 
 * Since we fixed the Robolectric bug, Jenkins can now happily show the correct test coverage result with the jacoco plugin
 
+**Setting up the Jacoco plugin is very similar to the gradle tasks we wrote. Except for that looping through build variants we need to hardcore the paths.**
+
+* For our example the values would look like this:
+	* Path to exec files: `app/build/jacoco/*.exec`
+	* Path to class directories:
+	```
+	app/build/intermediates/classes/free/**/be/vergauwen/simon/androidgradlejacoco,
+	app/build/intermediates/classes/paid/**/be/vergauwen/simon/androidgradlejacoco
+	```
+	* Path to source directories: `app/src/main/java, app/src/paid/java, app/src/free/java`
+	* Exclusions: `**/R.class,**/R$*.class,**/*$ViewInjector*.*,**/*$ViewBinder*.*,**/BuildConfig.*,**/Manifest*.*,**/*$Lambda$*.*,**/*Module.*,**/*Dagger*.*,**/*MembersInjector*.*,**/*_Provide*Factory*.*,**/*_Factory*.*,**/*$*$*.*`
+	
+* And hopefully you'll have a result as the following:
+
+<img src="jacoco-plugin.png />
+
 #### Sources
 * https://docs.gradle.org/current/userguide/build_lifecycle.html
 * https://github.com/dampcake/Robolectric-JaCoCo-Sample
