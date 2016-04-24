@@ -121,12 +121,10 @@ reports {
 ```
 Reporting tasks
 ---------------
-app:testDemoDebugUnitTestCoverage - Generate Jacoco coverage reports on the DemoDebug build. [app:testDemoDebugUnitTest]
-app:testDemoMockUnitTestCoverage - Generate Jacoco coverage reports on the DemoMock build. [app:testDemoMockUnitTest]
-app:testDemoReleaseUnitTestCoverage - Generate Jacoco coverage reports on the DemoRelease build. [app:testDemoReleaseUnitTest]
-app:testFullDebugUnitTestCoverage - Generate Jacoco coverage reports on the FullDebug build. [app:testFullDebugUnitTest]
-app:testFullMockUnitTestCoverage - Generate Jacoco coverage reports on the FullMock build. [app:testFullMockUnitTest]
-app:testFullReleaseUnitTestCoverage - Generate Jacoco coverage reports on the FullRelease build. [app:testFullReleaseUnitTest]
+testfreeDebugUnitTestCoverage - Generate Jacoco coverage reports on the freeDebug build.
+testpaidDebugUnitTestCoverage - Generate Jacoco coverage reports on the paidDebug build.
+testfreeReleaseUnitTestCoverage - Generate Jacoco coverage reports on the freeRelease build.
+testpaidReleaseUnitTestCoverage - Generate Jacoco coverage reports on the paidRelease build.
 ```
 
 1. We need to create the `.exec` files, which get created during building (since the jacoco plugin is applied to the `build.gradle` script. **DUH** --> `gradle build` or `./gradlew build` if your using the gradle wrapper.
@@ -144,7 +142,27 @@ app:testFullReleaseUnitTestCoverage - Generate Jacoco coverage reports on the Fu
 
 #### Publish HTML result
 
-** Under construction **
+* In case you want to keep to above explained script, and thus not use a later version of Jacoco and gradle (currently) 2.13-rc1. You can just publish the HTML reports created by our gradle script.
+* First of all it's important to know that you have to run the `gradle tasks` in order to create the reports, opposed to just building the project and having `jenkins jacoco plugin` generate the reports.
+* So for our example the `invoke gradle script` would look something like this:
+```
+clean
+build
+testfreeDebugUnitTestCoverage
+testpaidDebugUnitTestCoverage
+testfreeReleaseUnitTestCoverage
+testpaidReleaseUnitTestCoverage
+```
+
+* To publish the html report we'll be using `HTML Publisher plugin`. **Beware, you have to specify a new report for every build variant report.**
+* All you have to do in order to publish the html report is specify the location of the report, and give it a name.
+
+<img src="html-publisher-plugin.png" />
+
+* Now a report will be added, beware only the latest report will be viewable on the project page! And does not provide a graph like the `jacoco plugin`.
+
+<img src="html-report-link.png" />
+<img src="html-report.png" />
 
 #### Latest version all the things!!
 * When using gradle 2.13 and a jacoco version >= 0.7.6, we have some extra options!!
