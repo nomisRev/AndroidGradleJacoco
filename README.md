@@ -136,4 +136,32 @@ app:testFullReleaseUnitTestCoverage - Generate Jacoco coverage reports on the Fu
 
 <img src="report.png" />
 
+## Robolectric & Jenkins
+* There are a lot of know issues with Robolectric and Jacoco.
+* The above used jacoco version will give the correct test coverage when using robolectric for unit testing. **AWESOME** I'm done! Well if you're using Jenkins and using the jacoco plugin you'll see a totally different result, the Robolectric tests are not included! (ノಠ益ಠ)ノ彡┻━┻
+* Why!? The jacoco plugin creates the coverage reports for you instead of gradle, and is using the latest version. In other words, our older jacoco version we defined in our gradle script has 0 influence on our jacoco plugin and thus the "fix" is not working for Jenkins.
+* Luckily I found two solutions!
 
+#### Publish HTML result
+
+** Under construction **
+
+#### Latest version all the things!!
+* When using gradle 2.13, we have some extra options!!
+```
+/**
+* Whether or not classes without source location should be instrumented.
+* Defaults to {@code false}.
+*
+* This property is only taken into account if the used JaCoCo version
+* supports this option (JaCoCo version >= 0.7.6)
+*/
+boolean includeNoLocationClasses = false
+```
+
+#### Sources
+* https://docs.gradle.org/current/userguide/build_lifecycle.html
+* https://github.com/dampcake/Robolectric-JaCoCo-Sample
+* https://habrahabr.ru/company/rambler-co/blog/266837/
+* https://github.com/jacoco/jacoco/pull/288
+* https://github.com/appfoundry/android-project-template/blob/master/gradle/jacoco.gradle
