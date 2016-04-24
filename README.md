@@ -180,7 +180,7 @@ android {
 	
 * And hopefully you'll have a result as the following:
 
-<img src="jacoco-plugin.png" />
+<img src="jacoco-plugin2.png" />
 
 #### Sources
 * https://docs.gradle.org/current/userguide/build_lifecycle.html
