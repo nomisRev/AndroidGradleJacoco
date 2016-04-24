@@ -25,9 +25,39 @@ project.afterEvaluate {
 	// Where we'll do all our work!
 }
 ```
-* First we're going to `collect` all the `buildTypes` and `productFlavors` into a `List<T>`
-
+* First we're going to `collect` all the `buildTypes` and `productFlavors` into a `List<T>`. In case there were no product flavors defined, we'll add an empty string element to the list.
 ```
 def buildTypes = android.buildTypes.collect { type -> type.name }
 def productFlavors = android.productFlavors.collect { flavor -> flavor.name }
+if (!productFlavors) productFlavors.add('')
 ```
+**In our example we used the default build types (debug & release), and we defined a product flavor free and paid**
+* So we end up with 4 different build variants in AS:
+	* freeDebug
+	* paidDebug
+	* freeRelease
+	* paidRelease
+* Because AS defines them productFlavorBuildType we'll be doing the same. So we'll have double `foreach` loop that loops through our `productFlavors` and `buildTypes`. And since our source paths follow the same pattern we can define these at once as well. so we get `freeDebug` and `free/debug`on our first iteration, we need to do some more stuff in this iteration beside just defining it's name and path so let's do that!
+```
+productFlavors.each { productFlavorName ->
+        buildTypes.each { buildTypeName ->
+
+            def sourceName, sourcePath
+            if (!productFlavorName) {
+                sourceName = sourcePath = "${buildTypeName}"
+            } else {
+                sourceName = "${productFlavorName}${buildTypeName.capitalize()}"
+                sourcePath = "${productFlavorName}/${buildTypeName}"
+            }
+        }
+    }
+```
+* For each `build variant` we want to create a gradle task that generates the jacoco coverage report. So let's define a name for the gradle task first. The result being a task named testFreeDebugUnitTest in our first iteration.
+```
+def testTaskName = "test${sourceName.capitalize()}UnitTest"
+
+ task "${testTaskName}Coverage"(type: JacocoReport, dependsOn: "$testTaskName") {
+     //task code
+ }
+```
+
