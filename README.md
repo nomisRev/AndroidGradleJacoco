@@ -147,17 +147,24 @@ app:testFullReleaseUnitTestCoverage - Generate Jacoco coverage reports on the Fu
 ** Under construction **
 
 #### Latest version all the things!!
-* When using gradle 2.13, we have some extra options!!
+* When using gradle 2.13 and a jacoco version >= 0.7.6, we have some extra options!!
+* We can specify the following `testOptions` for our android build.
 ```
-/**
-* Whether or not classes without source location should be instrumented.
-* Defaults to {@code false}.
-*
-* This property is only taken into account if the used JaCoCo version
-* supports this option (JaCoCo version >= 0.7.6)
-*/
-boolean includeNoLocationClasses = false
+android {
+    testOptions {
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
+    }
+}
 ```
+
+**Beware you need gradle version 2.13 in order to be able to use this option, or update your gradle version to 2.13**
+--> Change the `distributionUrl` in your gradle-wrapper.properties to `https\://services.gradle.org/distributions-snapshots/gradle-2.13-20160228000026+0000-all.zip`
+
+* Since we fixed the Robolectric bug, Jenkins can now happily show the correct test coverage result with the jacoco plugin
 
 #### Sources
 * https://docs.gradle.org/current/userguide/build_lifecycle.html
