@@ -63,7 +63,7 @@ def testTaskName = "test${sourceName.capitalize()}UnitTestCoverage"
      //task code
  }
 ```
-**Use //noinspection GroovyAssignabilityCheck to get rid of the annoying lint warning, it's a common issue.**
+**Use `//noinspection GroovyAssignabilityCheck` to get rid of the annoying lint warning, it's a common issue.**
 
 * So let's do some playing nice stuff first. Setting the `group` and `description` of the task
 ```
@@ -180,7 +180,7 @@ android {
 	
 * And hopefully you'll have a result as the following:
 
-<img src="jacoco-plugin.png />
+<img src="jacoco-plugin.png" />
 
 #### Sources
 * https://docs.gradle.org/current/userguide/build_lifecycle.html
