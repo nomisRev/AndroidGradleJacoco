@@ -135,6 +135,38 @@ testpaidReleaseUnitTestCoverage - Generate Jacoco coverage reports on the paidRe
 <img src="report.png" />
 
 ## Robolectric & Jenkins
+
+* **As of 25 April 2016 Gradle 2.13 was released**. With Gradle 2.13 we have some extra options, and we can use the latest version of Jacoco. And thus have no problems with Jenkins or Robolectric anymore. (Should be the same for Powermock).
+* With the following snippet Robolectric test will be included in our test coverage `.exec` files. Since They're now included in our `.exec`, Jenkins will also show the correct test result.
+```
+android {
+    testOptions {
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
+    }
+}
+```
+
+**Setting up the Jacoco plugin is very similar to the gradle tasks we wrote. Except for that looping through build variants we need to hardcore the paths.**
+
+* For our example the values would look like this:
+	* Path to exec files: `app/build/jacoco/*.exec`
+	* Path to class directories:
+	```
+	app/build/intermediates/classes/free/**/be/vergauwen/simon/androidgradlejacoco,
+	app/build/intermediates/classes/paid/**/be/vergauwen/simon/androidgradlejacoco
+	```
+	* Path to source directories: `app/src/main/java, app/src/paid/java, app/src/free/java`
+	* Exclusions: `**/R.class,**/R$*.class,**/*$ViewInjector*.*,**/*$ViewBinder*.*,**/BuildConfig.*,**/Manifest*.*,**/*$Lambda$*.*,**/*Module.*,**/*Dagger*.*,**/*MembersInjector*.*,**/*_Provide*Factory*.*,**/*_Factory*.*,**/*$*$*.*`
+	
+* And hopefully you'll have a result as the following:
+
+<img src="jacoco-plugin2.png" />
+
+##### Deprecated
 * There are a lot of know issues with Robolectric and Jacoco.
 * The above used jacoco version will give the correct test coverage when using robolectric for unit testing. **AWESOME** I'm done! Well if you're using Jenkins and using the jacoco plugin you'll see a totally different result, the Robolectric tests are not included! (ノಠ益ಠ)ノ彡┻━┻
 * Why!? The jacoco plugin creates the coverage reports for you instead of gradle, and is using the latest version. In other words, our older jacoco version we defined in our gradle script has 0 influence on our jacoco plugin and thus the "fix" is not working for Jenkins.
@@ -186,23 +218,7 @@ android {
 **When using the wrapper use `./gradlew`, if you've updated you can use `gradle`**
 --> Change the `distributionUrl` in your gradle-wrapper.properties to `https\://services.gradle.org/distributions-snapshots/gradle-2.13-20160228000026+0000-all.zip`
 
-* Since we fixed the Robolectric bug, Jenkins can now happily show the correct test coverage result with the jacoco plugin
-
-**Setting up the Jacoco plugin is very similar to the gradle tasks we wrote. Except for that looping through build variants we need to hardcore the paths.**
-
-* For our example the values would look like this:
-	* Path to exec files: `app/build/jacoco/*.exec`
-	* Path to class directories:
-	```
-	app/build/intermediates/classes/free/**/be/vergauwen/simon/androidgradlejacoco,
-	app/build/intermediates/classes/paid/**/be/vergauwen/simon/androidgradlejacoco
-	```
-	* Path to source directories: `app/src/main/java, app/src/paid/java, app/src/free/java`
-	* Exclusions: `**/R.class,**/R$*.class,**/*$ViewInjector*.*,**/*$ViewBinder*.*,**/BuildConfig.*,**/Manifest*.*,**/*$Lambda$*.*,**/*Module.*,**/*Dagger*.*,**/*MembersInjector*.*,**/*_Provide*Factory*.*,**/*_Factory*.*,**/*$*$*.*`
-	
-* And hopefully you'll have a result as the following:
-
-<img src="jacoco-plugin2.png" />
+* Since we fixed the Robolectric bug, Jenkins can now happily show the correct test coverage result with the jacoco plugin.
 
 #### Sources
 * https://docs.gradle.org/current/userguide/build_lifecycle.html
