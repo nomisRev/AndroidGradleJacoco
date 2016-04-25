@@ -2,7 +2,7 @@
 
 ## Setting up Jacoco
 
-* First of all we'll have to setup Jacoco in Gradle. In order to avoid creating an enourmous gradle file, we'll create a gradle file seperately for Jacoco. This can be than be copied to any project and be imported into any build.gradle you need it.
+* First of all we'll have to setup Jacoco in Gradle. In order to avoid creating an enormous gradle file, we'll create a gradle file separately for Jacoco. This can be than be copied to any project and be imported into any build.gradle you need it.
 
 * By default there is a gradle folder in the root of your android project. This folder contains the Gradle wrapper, a little bit more about this in the Robolectric setup below. Within this folder we'll create a `jacoco.gradle` file. Don't worry if you don't have a lot of experience with gradle or groovy, it will all be explained below. If you don't require the extra explanation just checkout the code in this repo, `/gradle/jacoco.gradle`.
 
@@ -182,6 +182,7 @@ android {
 ```
 
 **Beware you need gradle version 2.13 in order to be able to use this option, or update your gradle version to 2.13**
+
 **When using the wrapper use `./gradlew`, if you've updated you can use `gradle`**
 --> Change the `distributionUrl` in your gradle-wrapper.properties to `https\://services.gradle.org/distributions-snapshots/gradle-2.13-20160228000026+0000-all.zip`
 
