@@ -182,6 +182,7 @@ android {
 ```
 
 **Beware you need gradle version 2.13 in order to be able to use this option, or update your gradle version to 2.13**
+**When using the wrapper use `./gradlew`, if you've updated you can use `gradle`**
 --> Change the `distributionUrl` in your gradle-wrapper.properties to `https\://services.gradle.org/distributions-snapshots/gradle-2.13-20160228000026+0000-all.zip`
 
 * Since we fixed the Robolectric bug, Jenkins can now happily show the correct test coverage result with the jacoco plugin
