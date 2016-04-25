@@ -166,7 +166,7 @@ android {
 
 <img src="jacoco-plugin2.png" />
 
-##### Deprecated
+## Deprecated - Could be of use if future updates break your setup
 * There are a lot of know issues with Robolectric and Jacoco.
 * The above used jacoco version will give the correct test coverage when using robolectric for unit testing. **AWESOME** I'm done! Well if you're using Jenkins and using the jacoco plugin you'll see a totally different result, the Robolectric tests are not included! (ノಠ益ಠ)ノ彡┻━┻
 * Why!? The jacoco plugin creates the coverage reports for you instead of gradle, and is using the latest version. In other words, our older jacoco version we defined in our gradle script has 0 influence on our jacoco plugin and thus the "fix" is not working for Jenkins.
