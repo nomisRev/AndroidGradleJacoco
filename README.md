@@ -140,6 +140,8 @@ testpaidReleaseUnitTestCoverage - Generate Jacoco coverage reports on the paidRe
 * Why!? The jacoco plugin creates the coverage reports for you instead of gradle, and is using the latest version. In other words, our older jacoco version we defined in our gradle script has 0 influence on our jacoco plugin and thus the "fix" is not working for Jenkins.
 * Luckily I found two solutions!
 
+**Powermock seems to have the same issues as Robolectric, but both solution explained here should solve that 2. But I have not confirmed it yet.**
+
 #### Publish HTML result
 
 * In case you want to keep to above explained script, and thus not use a later version of Jacoco and gradle (currently) 2.13-rc1. You can just publish the HTML reports created by our gradle script.
@@ -180,6 +182,7 @@ android {
 ```
 
 **Beware you need gradle version 2.13 in order to be able to use this option, or update your gradle version to 2.13**
+**When using the wrapper use `./gradlew`, if you've updated you can use `gradle`**
 --> Change the `distributionUrl` in your gradle-wrapper.properties to `https\://services.gradle.org/distributions-snapshots/gradle-2.13-20160228000026+0000-all.zip`
 
 * Since we fixed the Robolectric bug, Jenkins can now happily show the correct test coverage result with the jacoco plugin
