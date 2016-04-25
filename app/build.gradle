@@ -1,0 +1,83 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+//script plugins
+apply from: rootProject.file('gradle/jacoco.gradle')
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        applicationId "be.vergauwen.simon.androidgradlejacoco"
+        minSdkVersion 9
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+
+        buildConfigField "String", "URI",  "\"https://api.github.com\""
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            testCoverageEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
+            testCoverageEnabled true
+        }
+    }
+    productFlavors{
+        free{
+            applicationIdSuffix ".free"
+            versionName "1.0-free"
+
+        }
+        paid{
+            applicationIdSuffix ".paid"
+            versionName "1.0-paid"
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+        free.java.srcDirs += 'src/free/kotlin'
+        paid.java.srcDirs += 'src/paid/kotlin'
+        testPaid.java.srcDirs += 'src/testPaid/kotlin'
+        testFree.java.srcDirs += 'src/testFree/kotlin'
+    } 
+}
+
+kapt {
+    generateStubs = true
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':himura-kt')
+
+    testCompile('junit:junit:4.12',"org.robolectric:robolectric:3.1-SNAPSHOT",
+        "org.jetbrains.kotlin:kotlin-test:$kotlin_version")
+
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    compile 'com.google.dagger:dagger:2.0'
+    kapt 'com.google.dagger:dagger-compiler:2.0'
+    compile 'javax.annotation:jsr250-api:1.0'
+
+    //Retrofit
+    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.0.1'
+
+    //Rx dependencies
+    compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'io.reactivex:rxjava:1.1.3'
+}
