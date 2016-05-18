@@ -39,7 +39,7 @@ project.afterEvaluate {
             def testTaskName = "test${sourceName.capitalize()}UnitTest"
 
             //noinspection GroovyAssignabilityCheck
-            task "${testTaskName}Coverage"(type: JacocoReport, dependsOn: "$testTaskName") {
+            task "create${sourceName.capitalize()}UnitTestCoverageReport"(type: JacocoReport, dependsOn: "$testTaskName") {
 
                 group = "Reporting"
                 description =
