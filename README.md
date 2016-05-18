@@ -10,6 +10,7 @@
 
 * `apply plugin: 'jacoco'`, if we apply the plugin here it automatically gets applied to the `build.gradle` we import this script into. You don't have to worry about dependencies, the android gradle plugin takes care of this for us!
 
+**With the release Gradle 2.13, this is no longer required. More info below **
 * I like to specify what jacoco is used because there can be some weird side-effects with jacoco versions. The version shown here should work fine! But more about this in the Jenkins/Robolectric setup.
 ```
 jacoco {
@@ -148,6 +149,12 @@ android {
         }
     }
 }
+```
+
+* To setup Gradle 2.13 as wrapper, make the following change in `gradle/wrapper/gradle-wrapper.properties`:
+```
+-distributionUrl=https\://services.gradle.org/distributions/gradle-2.10-all.zip
++distributionUrl=https\://services.gradle.org/distributions/gradle-2.13-all.zip
 ```
 
 **Setting up the Jacoco plugin is very similar to the gradle tasks we wrote. Except for that looping through build variants we need to hardcore the paths.**
